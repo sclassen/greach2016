@@ -7,6 +7,6 @@ class ScreenshotExtensionRegistry implements ExtensionRegistry {
 
     @Override
     void register(Asciidoctor asciidoctor) {
-        throw new RuntimeException("Not implemented yet!")
+        asciidoctor.javaExtensionRegistry().blockMacro 'capture', CaptureBlockMacroProcessor
     }
 }
