@@ -22,6 +22,6 @@ capture::${url}[]
           println html
 
         then:
-          html.replaceAll('\n', ' ') =~ /<img src=".*logo.png"/
+          html.replaceAll('\n', ' ') =~ /<img src=".*screenshot.png"/
     }
 }
