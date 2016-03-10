@@ -22,6 +22,6 @@ capture::${url}[]
           println html
 
         then:
-          html.contains('<p>Greach 2016</p>')
+          html.replaceAll('\n', ' ') =~ /<img src=".*logo.png"/
     }
 }
