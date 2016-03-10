@@ -10,6 +10,8 @@ class CaptureBlockMacroProcessor extends BlockMacroProcessor {
 
     @Override
     protected Object process(AbstractBlock parent, String target, Map<String, Object> attributes) {
-        createBlock(parent, "paragraph", "Greach 2016", [:], [:])
+        createBlock(parent, "image", "", [
+                target: CaptureBlockMacroProcessor.classLoader.getResource('logo.png').toString()
+        ], [:])
     }
 }
