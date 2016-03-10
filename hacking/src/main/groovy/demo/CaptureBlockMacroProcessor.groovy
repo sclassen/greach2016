@@ -28,7 +28,8 @@ class CaptureBlockMacroProcessor extends BlockMacroProcessor {
 
 
         createBlock(parent, "image", "", [
-                target: 'file:/tmp/screenshot.png'
+                target: 'file:/tmp/screenshot.png',
+                title : attributes['title']
         ], [:])
     }
 }
