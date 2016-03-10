@@ -10,6 +10,6 @@ class CaptureBlockMacroProcessor extends BlockMacroProcessor {
 
     @Override
     protected Object process(AbstractBlock parent, String target, Map<String, Object> attributes) {
-        throw new RuntimeException("Not implemented yet!")
+        createBlock(parent, "paragraph", "Greach 2016", [:], [:])
     }
 }
