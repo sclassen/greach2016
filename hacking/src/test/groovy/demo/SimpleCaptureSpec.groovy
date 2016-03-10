@@ -4,10 +4,15 @@ import org.asciidoctor.Asciidoctor
 import spock.lang.Specification
 
 class SimpleCaptureSpec extends Specification {
+    def url = SimpleCaptureSpec.classLoader.getResource("sample.html").toString()
 
-    def aDoc = """Capture Test XXX"""
+    def aDoc = """Capture Test
 
-    def "ensure asciidoctor is working"() {
+.freshly captured
+capture::${url}[]
+"""
+
+    def "ensure macro is working"() {
         given:
           Asciidoctor asciidoctor = Asciidoctor.Factory.create()
 
@@ -17,6 +22,6 @@ class SimpleCaptureSpec extends Specification {
           println html
 
         then:
-          html.contains('<p>Capture Test</p>')
+          html.contains('<p>Greach 2016</p>')
     }
 }
