@@ -23,5 +23,6 @@ capture::${url}[]
 
         then:
           html.replaceAll('\n', ' ') =~ /<img src=".*screenshot.png"/
+          html.contains('freshly')
     }
 }
