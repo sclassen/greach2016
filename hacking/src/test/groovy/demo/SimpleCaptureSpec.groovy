@@ -8,8 +8,14 @@ class SimpleCaptureSpec extends Specification {
 
     def aDoc = """Capture Test
 
+[browser]
+....
+go "${url}"
+\$("input").value("Greach 2016")
+....
+
 .freshly captured
-capture::${url}[]
+capture::[]
 """
 
     def "ensure macro is working"() {
@@ -22,7 +28,6 @@ capture::${url}[]
           println html
 
         then:
-          html.replaceAll('\n', ' ') =~ /<img src=".*screenshot.png"/
-          html.contains('freshly')
+          html.contains('browser: go')
     }
 }
