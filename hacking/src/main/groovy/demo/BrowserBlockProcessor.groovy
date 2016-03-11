@@ -11,6 +11,6 @@ class BrowserBlockProcessor extends BlockProcessor {
 
     @Override
     Object process(AbstractBlock parent, Reader reader, Map<String, Object> attributes) {
-        throw new RuntimeException("Not implemented yet!")
+        createBlock(parent, "paragraph", "browser: " + reader.lines().join("\n"), [:], [:])
     }
 }
