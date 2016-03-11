@@ -28,6 +28,6 @@ capture::[]
           println html
 
         then:
-          html.contains('browser: go')
+          ! html.contains('go')
     }
 }
