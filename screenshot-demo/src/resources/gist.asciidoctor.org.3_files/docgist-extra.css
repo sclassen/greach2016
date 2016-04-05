@@ -1,0 +1,245 @@
+#content {
+    margin: 1em auto;
+    max-width: 60em;
+}
+
+#gist-id {
+    width: 18em;
+    height: auto;
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.navbar * {
+    box-sizing: content-box;
+}
+
+/*
+div.navbar-header {
+    height: 50px;
+}
+
+#nav-buttons {
+    margin: 8px 0;
+    display: inline-block;
+}
+*/
+
+.navbar-brand {
+    height: 35px;
+    padding: 12px 12px 0 12px;
+    font-family: 'Open Sans';
+}
+
+#main-menu-items {
+    font-family: 'Open Sans';
+}
+
+#attributes-menu > li > a {
+    font-family: 'Droid Sans Mono';
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 520px;
+    overflow-x: hidden;
+}
+
+div.alert {
+    font-size: 1.125rem;
+}
+
+/* Fixes for the default Asciidoctor styling */
+
+.quoteblock blockquote em,
+.quoteblock blockquote p em,
+p aside em {
+    font-style: normal;
+}
+
+/* fix bootstrap asiciidoctor clashes */
+.listingblock pre.highlightjs {
+    padding: 1em;
+}
+
+.listingblock pre.highlightjs > code {
+    padding: 0;
+}
+
+.verseblock pre {
+    padding: 1em;
+}
+
+.mark {
+    background-color: inherit;
+}
+
+.cm-s-elegant span.cm-comment {
+    /* workaround for tables */
+    font-style: normal;
+}
+
+div.exampleblock.tabbed-example > div.content > div.listingblock {
+    margin-bottom: 0;
+}
+
+#footer {
+    max-width: 60em;
+    margin: 1em auto;
+    padding-left: .9375em;
+    padding-right: .9375em;
+    background: none;
+}
+
+#footer-text {
+    padding: 0.25em;
+    border-top: 1px solid #ddddd8;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 0.9375em;
+}
+
+#footer-text > span {
+    padding: 0 0 0 0.5em;
+}
+
+#footer-text > i.fa {
+    padding: 0 0 0 0.5em;
+}
+
+#footer-text > i.fa:first-child {
+    padding: 0;
+}
+
+#footer-text > span > a {
+    color: inherit;
+}
+
+pre.highlight code.hljs {
+    background-color: inherit;
+}
+
+#editor-wrapper .CodeMirror pre {
+    font-family: 'Droid Sans Mono', monospace;
+    font-size: 15px;
+    line-height: 18px;
+}
+
+#editor-wrapper.editing {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    height: auto;
+    overflow: auto;
+}
+
+#editor-wrapper .CodeMirror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+}
+
+#content-wrapper.editing {
+    position: fixed;
+    top: 52px;
+    right: 0;
+    left: 50%;
+    bottom: 0;
+    margin: 0;
+    overflow: auto;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+#content-wrapper.editing.showcomments span.mark {
+    background-color: #fcf8e3;
+}
+
+.comment {
+    max-width: 33%;
+    background: #fff3b8;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 4px;
+    float: right;
+    clear: right;
+    border: solid 1px #cccccc;
+    margin-left: 2px;
+    font-weight: 400;
+    font-size: 15px;
+    font-style: normal;
+}
+
+span.commenter, em.commenter {
+    background: #fff3b8;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+span.commenter {
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 4px;
+}
+
+span.commenter:before, em.commenter:before {
+    content: '(';
+}
+
+span.commenter:after, em.commenter:after {
+    content: ')';
+}
+
+@media print {
+    a.bare:after {
+        content: none;
+    }
+
+    #footer {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 78em) {
+    #gist-id {
+        width: 6em;
+    }
+}
+
+@media screen and (max-width: 68em) {
+    #theme-button, #highlighter-button, #attributes-button {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #theme-button, #highlighter-button, #attributes-button {
+        display: block;
+    }
+    #gist-id {
+        width: 16em;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav > li > a {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+}
+
+@media (max-width: 768px) {
+    #navbar-buttons, #main-menu-items {
+        background: #f8f8f8;
+        z-index: 1000;
+        position: fixed;
+    }
+}

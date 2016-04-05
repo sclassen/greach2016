@@ -1,0 +1,19 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+        classpath 'org.asciidoctor:asciidoctorj-screenshot:0.1.0'
+    }
+}
+
+apply plugin: 'org.asciidoctor.gradle.asciidoctor'
+
+asciidoctor {
+    sourceDir = file('src/asciidoc')
+    attributes = [
+            'screenshot-dir-name': "../screens",
+    ]
+}

@@ -1,0 +1,49 @@
+= Screenshot Extension Demo
+Doc Writer
+v1.0
+:example-caption!:
+
+TIP: This is an example using screenshot extension for asciidoctorJ
+
+== How to use Gist AsciiDoctor
+
+Go to the Gist AsciiDoctor main page at http://gist.asciidoctor.org/
+
+[geb, browser]
+....
+go "file:///home/scl/projects/greach2016/screenshot-demo/src/resources/gist.asciidoctor.org.1.html"
+waitFor(5,0.1){$("#content h1").size()>0}
+....
+
+.The main page
+screenshot::[mainpage, browser]
+
+Then enter a Gist number that point to a file written in asciidoctor. For instance 9a8d3f1d32a8f0656a42 as for https://gist.github.com/mojavelinux/9a8d3f1d32a8f0656a42
+
+.Awesome gist example by mojavelinux
+screenshot::file:///home/scl/projects/greach2016/screenshot-demo/src/resources/gist.asciidoctor.org.2.html[name=gist, selector=".entry-title"]
+
+when you validate you get the result
+
+[geb]
+....
+go "file:///home/scl/projects/greach2016/screenshot-demo/src/resources/gist.asciidoctor.org.3.html"
+waitFor(5,0.1){$("#content h1").size()>0}
+....
+
+.That's it
+screenshot::[gistresult, browser]
+
+== Also checkout the cool, responsive Asciidoctor homepage
+
+[geb, nexus5]
+....
+go "file:///home/scl/projects/greach2016/screenshot-demo/src/resources/asciidoctor.org.html"
+....
+
+.Look Ma, it's nexus 5!
+screenshot::[frame=nexus5]
+
+Isn't that a cool thing ???
+
+

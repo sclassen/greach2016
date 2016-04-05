@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="http://gist.asciidoctor.org/favicon.ico">
+    <title>DocGist</title>
+
+    <script src="gist.asciidoctor.org.3_files/jquery.js"></script>
+    <script src="gist.asciidoctor.org.3_files/firebase.js"></script>
+    <script src="gist.asciidoctor.org.3_files/codemirror.js"></script>
+    <script src="gist.asciidoctor.org.3_files/firepad.js"></script>
+
+    <script src="gist.asciidoctor.org.3_files/asciidoctor-all.js"></script>
+    <script src="gist.asciidoctor.org.3_files/base64.js"></script>
+    <script src="gist.asciidoctor.org.3_files/gist.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="gist.asciidoctor.org.3_files/bootstrap.css" rel="stylesheet">
+    <script src="gist.asciidoctor.org.3_files/bootstrap.js"></script>
+    <link href="gist.asciidoctor.org.3_files/font-awesome.css" rel="stylesheet">
+
+    <link href="gist.asciidoctor.org.3_files/codemirror.css" rel="stylesheet">
+    <link href="gist.asciidoctor.org.3_files/neo.css" rel="stylesheet">
+    <link href="gist.asciidoctor.org.3_files/elegant.css" rel="stylesheet">
+    <link href="gist.asciidoctor.org.3_files/midnight.css" rel="stylesheet">
+    <script src="gist.asciidoctor.org.3_files/runmode.js"></script>
+    <script src="gist.asciidoctor.org.3_files/loadmode.js"></script>
+    <script src="gist.asciidoctor.org.3_files/meta.js"></script>
+    <script src="gist.asciidoctor.org.3_files/cypher.js"></script>
+    <script src="gist.asciidoctor.org.3_files/codemirror-asciidoc.js"></script>
+    <script src="gist.asciidoctor.org.3_files/colorize.js"></script>
+
+    <link href="gist.asciidoctor.org.3_files/default.css" rel="stylesheet">
+    <link href="gist.asciidoctor.org.3_files/darkula.css" rel="stylesheet" class="dark">
+    <script src="gist.asciidoctor.org.3_files/highlight.js"></script>
+    <script src="gist.asciidoctor.org.3_files/asciidoc.js"></script>
+
+    <link href="gist.asciidoctor.org.3_files/prettify.css" rel="stylesheet">
+    <link href="gist.asciidoctor.org.3_files/desert.css" rel="stylesheet" class="dark">
+    <script src="gist.asciidoctor.org.3_files/prettify.js"></script>
+
+    <script src="gist.asciidoctor.org.3_files/uuid-1.js"></script>
+
+    <link rel="stylesheet" href="gist.asciidoctor.org.3_files/css.css">
+
+    <link rel="stylesheet" href="gist.asciidoctor.org.3_files/asciidoctor.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="gist.asciidoctor.org.3_files/asciidoctor.css">
+
+    <script type="text/x-mathjax-config;executed=true">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nostem|nolatexmath"
+    },
+   asciimath2jax: {
+     delimiters: [["\\$", "\\$"]],
+     ignoreClass: "nostem|nostem|noasciimath"
+    },
+   Safe: {
+     allow: {
+       URLs: "safe",
+       classes: "safe",
+       cssIDs: "safe",
+       styles: "safe",
+       fontsize: "all",
+       require: "safe"
+     },
+     safeProtocols: {
+          http: true,
+          https: true,
+          file: false,
+          javascript: false
+     }
+   }
+});
+</script>
+<script type="text/javascript" src="gist.asciidoctor.org.3_files/MathJax.js"></script>
+
+<link rel="stylesheet" href="gist.asciidoctor.org.3_files/docgist-extra.css">
+
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">.MathJax_Preview .MJXc-math {color: inherit!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXc-script {font-size: .8em}
+.MJXc-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXc-bold {font-weight: bold}
+.MJXc-italic {font-style: italic}
+.MJXc-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXc-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXc-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXc-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXc-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXc-largeop {font-size: 150%}
+.MJXc-largeop.MJXc-int {vertical-align: -.2em}
+.MJXc-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXc-display {display: block; text-align: center; margin: 1em 0}
+.MJXc-math span {display: inline-block}
+.MJXc-box {display: block!important; text-align: center}
+.MJXc-box:after {content: " "}
+.MJXc-rule {display: block!important; margin-top: .1em}
+.MJXc-char {display: block!important}
+.MJXc-mo {margin: 0 .15em}
+.MJXc-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXc-denom {display: inline-table!important; width: 100%}
+.MJXc-denom > * {display: table-row!important}
+.MJXc-surd {vertical-align: top}
+.MJXc-surd > * {display: block!important}
+.MJXc-script-box > *  {display: table!important; height: 50%}
+.MJXc-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXc-script-box > *:last-child > * {vertical-align: bottom}
+.MJXc-script-box > * > * > * {display: block!important}
+.MJXc-mphantom {visibility: hidden}
+.MJXc-munderover {display: inline-table!important}
+.MJXc-over {display: inline-block!important; text-align: center}
+.MJXc-over > * {display: block!important}
+.MJXc-munderover > * {display: table-row!important}
+.MJXc-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXc-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXc-mtr {display: table-row!important}
+.MJXc-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXc-mtr > .MJXc-mtd:first-child {padding-left: 0}
+.MJXc-mtr:first-child > .MJXc-mtd {padding-top: 0}
+.MJXc-mlabeledtr {display: table-row!important}
+.MJXc-mlabeledtr > .MJXc-mtd:first-child {padding-left: 0}
+.MJXc-mlabeledtr:first-child > .MJXc-mtd {padding-top: 0}
+.MJXc-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXc-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXc-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXc-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXc-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXc-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXc-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXc-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXc-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXc-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXc-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_CHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head><body><div style="display: none;" id="MathJax_Message"></div>
+<nav id="main-menu" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-items" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://gist.asciidoctor.org/">
+                <i class="fa fa-pencil-square-o"></i> DocGist
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="main-menu-items">
+            <ul class="nav navbar-nav" id="navbar-buttons">
+                <li class="dropdown" id="file-button">
+                    <a class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" data-target="#" title="Create, edit, save and open documents">
+                        <i class="fa fa-file-text-o"></i> File
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu scrollable-menu" id="file-menu">
+                        <li id="source-button" class="">
+                            <a id="gist-link" href="https://gist.github.com/9a8d3f1d32a8f0656a42" target="_blank" title="See the source document rendered on this page">
+                                <i class="fa fa-fw fa-file-text-o"></i> View source
+                            </a>
+                        </li>
+                        <li><a id="new-empty" href="javascript:;">
+                            <i class="fa fa-fw fa-file-o"></i> New empty document
+                        </a></li>
+                        <li><a id="new-copy" href="javascript:;">
+                            <i class="fa fa-fw fa-files-o"></i> New copy of current document
+                        </a></li>
+                        <li class=""><a id="save-button" href="javascript:;">
+                            <i class="fa fa-fw fa-floppy-o"></i> <span>Save</span>
+                        </a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Recent documents</li>
+                    <li><a href="http://gist.asciidoctor.org/?" target="_blank">DocGist</a></li></ul>
+                </li>
+
+                <li><a class="btn btn-default navbar-btn" id="edit-button" href="javascript:;">
+                    <i class="fa fa-fw fa-pencil"></i> Edit
+                </a></li>
+
+                <li class="dropdown" id="theme-button">
+                    <a class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" data-target="#" title="Load theme stylesheet">
+                        <i class="fa fa-paint-brush"></i> Theme
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="theme-menu">
+                    <li class="disabled"><a href="javascript:;">Asciidoctor</a></li><li><a href="javascript:;">Colony</a></li><li><a href="javascript:;">Foundation</a></li><li><a href="javascript:;">Foundation (Lime)</a></li><li><a href="javascript:;">Foundation (Potion)</a></li><li><a href="javascript:;">GitHub</a></li><li><a href="javascript:;">Golo</a></li><li><a href="javascript:;">Iconic</a></li><li><a href="javascript:;">Maker</a></li><li><a href="javascript:;">Old Standard</a></li><li><a href="javascript:;">Read the Docs</a></li><li><a href="javascript:;">Riak</a></li><li><a href="javascript:;">Rocket Panda</a></li><li><a href="javascript:;">RubyGems</a></li></ul>
+                </li>
+
+                <li class="dropdown" id="highlighter-button">
+                    <a class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" data-target="#" title="Choose syntax highlighter for source code">
+                        <i class="fa fa-code"></i> Highlight
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="highlighter-menu">
+                    <li class="disabled"><a href="javascript:;">CodeMirror</a></li><li><a href="javascript:;">highlight.js</a></li><li><a href="javascript:;">Prettify</a></li></ul>
+                </li>
+
+                <li class="dropdown" id="attributes-button">
+                    <a class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" data-target="#" title="Attributes to set or unset">
+                        <i class="fa fa-cog"></i> Attributes
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="attributes-menu">
+                    <li><a href="javascript:;">:compat-mode:</a></li><li class="disabled"><a href="javascript:;">:compat-mode!:</a></li><li><a href="javascript:;">:doctype: article</a></li><li><a href="javascript:;">:doctype: book</a></li><li class="disabled"><a href="javascript:;">:doctype!:</a></li><li><a href="javascript:;">:example-caption:</a></li><li class="disabled"><a href="javascript:;">:example-caption!:</a></li><li class="disabled"><a href="javascript:;">:experimental:</a></li><li><a href="javascript:;">:experimental!:</a></li><li><a href="javascript:;">:no-header-footer:</a></li><li><a href="javascript:;">:no-highlight:</a></li><li class="disabled"><a href="javascript:;">:no-highlight!:</a></li><li><a href="javascript:;">:numbered:</a></li><li class="disabled"><a href="javascript:;">:numbered!:</a></li><li class="disabled"><a href="javascript:;">:stem: asciimath</a></li><li><a href="javascript:;">:stem: latexmath</a></li><li><a href="javascript:;">:stem:</a></li><li class="disabled"><a href="javascript:;">:table-caption:</a></li><li><a href="javascript:;">:table-caption!:</a></li><li class="disabled"><a href="javascript:;">:toc:</a></li><li><a href="javascript:;">:toc: macro</a></li><li><a href="javascript:;">:toc: preamble</a></li><li><a href="javascript:;">:toc!:</a></li><li><a href="javascript:;">:toclevels: 1</a></li><li class="disabled"><a href="javascript:;">:toclevels: 2</a></li><li><a href="javascript:;">:toclevels: 3</a></li><li><a href="javascript:;">:toclevels: 4</a></li></ul>
+                </li>
+
+                <li class="dropdown">
+                    <a class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" data-target="#" title="Share this page">
+                        <i class="fa fa-share-alt"></i> Share
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a id="twitter-share" href="https://twitter.com/intent/tweet?text=Check%20this%20out%3A%20Hello%2C%20AsciiDoc%21&amp;url=http%3A%2F%2Fgist.asciidoctor.org%2F%3F9a8d3f1d32a8f0656a42" target="_blank" data-toggle="tooltip" title="Tweet">
+                            <i class="fa fa-fw fa-twitter-square"></i> Twitter
+                        </a></li>
+                        <li><a id="facebook-share" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fgist.asciidoctor.org%2F%3F9a8d3f1d32a8f0656a42" target="_blank" data-toggle="tooltip" title="Share link on Facebook">
+                            <i class="fa fa-fw fa-facebook-square"></i> Facebook
+                        </a></li>
+                        <li><a id="google-plus-share" href="https://plus.google.com/share?url=http%3A%2F%2Fgist.asciidoctor.org%2F%3F9a8d3f1d32a8f0656a42" target="_blank" data-toggle="tooltip" title="Share link on Google+">
+                            <i class="fa fa-fw fa-google-plus-square"></i> Google+
+                        </a></li>
+                        <li><a id="google-short-url-share" href="javascript:;" data-toggle="tooltip" title="Get a short link to this page">
+                            <i class="fa fa-fw fa-link"></i> Short URL
+                        </a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <form class="navbar-form navbar-right">
+                        <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-link"></i>
+                          </span>
+                            <input class="span2 form-control" id="gist-id" placeholder="GitHub Gist/File / Dropbox URL" type="text">
+                        </div>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="editor-wrapper">
+    <textarea id="editor" style="display: none;"></textarea>
+</div>
+
+<div id="content-wrapper">
+    <div id="content"><h1>Hello, AsciiDoc!</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_first_section">First Section</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>An introduction to <a href="http://asciidoc.org/">AsciiDoc</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_first_section"><a class="anchor" href="#_first_section"></a>First Section</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>item 1</p>
+</li>
+<li>
+<p>item 2</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-ruby cm-s-default" data-lang="ruby"><span class="cm-variable">puts</span> <span class="cm-string">"Hello, World!"</span></code></pre>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+
+<div id="footer">
+    <div style="display: block;" id="footer-text"><i title="Author" class="fa fa-user"></i><span><a href="mailto:doc@example.com">Doc Writer</a></span><i title="Powered by" class="fa fa-bolt"></i><span><a href="http://asciidoctor.org/">Asciidoctor 1.5.3</a></span><i title="Powered by" class="fa fa-pencil-square-o"></i><span><a href="http://gist.asciidoctor.org/?9a8d3f1d32a8f0656a42">docgist</a></span></div>
+</div>
+
+<div style="display: none;" id="share-short-url-form" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <i class="fa fa-link"></i> Share
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset>
+                        <label for="share-url">Copy and share the link!</label> <input class="form-control" id="share-url" autofocus="" type="text">
+                        <label> <input id="short-url-remove-header-footer" type="checkbox">
+                            Remove header and footer of the target page.
+                        </label>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body></html>
