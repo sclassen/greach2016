@@ -1,0 +1,231 @@
+= Hacking
+
+== Start
+
+- Show *build.gradle*
+- Show *resources*
+- Show *SimpleCaptureSpec*
+
+== Add macro which inserts static text
+
+[source, java]
+.SimpleCaptureSpec.groovy
+----
+def url = SimpleCaptureSpec.classLoader.getResource("sample.html").toString()
+
+def aDoc = """Capture Test
+
+.freshly captured
+capture::${url}[]
+"""
+----
+
+* expected: `Greach 2016`
+
+== First Version of the macro
+
+[source]
+.main/resources/META-INF/services/org.asciidoctor.extension.spi.ExtensionRegistry
+----
+demo.ScreenshotExtensionRegistry
+----
+
+[source, java]
+.ScreenshotExtensionRegistry.groovy
+----
+package demo
+
+import org.asciidoctor.Asciidoctor
+import org.asciidoctor.extension.spi.ExtensionRegistry
+
+class ScreenshotExtensionRegistry implements ExtensionRegistry {
+
+    @Override
+    void register(Asciidoctor asciidoctor) {
+        throw new RuntimeException("Not implemented yet!")
+    }
+}
+----
+
+== Implement Macro with static Text
+
+[source, java]
+.ScreenshotExtensionRegistry.groovy
+----
+@Override
+void register(Asciidoctor asciidoctor) {
+    asciidoctor.javaExtensionRegistry().blockMacro 'capture', CaptureBlockMacroProcessor
+}
+----
+
+
+[source, java]
+.CaptureBlockMacroProcessor.groovy - Part 1
+----
+package demo
+
+import org.asciidoctor.ast.AbstractBlock
+import org.asciidoctor.extension.BlockMacroProcessor
+
+class CaptureBlockMacroProcessor extends BlockMacroProcessor {
+    CaptureBlockMacroProcessor(String macroName, Map<String, Object> config) {
+        super(macroName, config)
+    }
+
+    @Override
+    protected Object process(AbstractBlock parent, String target, Map<String, Object> attributes) {
+        throw new RuntimeException("Not implemented yet!")
+    }
+}
+----
+
+
+[source, java]
+.CaptureBlockMacroProcessor.groovy - Part 2
+----
+@Override
+protected Object process(AbstractBlock parent, String target, Map<String, Object> attributes) {
+    createBlock(parent, "paragraph", "Greach 2016", [:], [:])
+}
+----
+
+== Implement Macro with static Image
+
+[source, java]
+.SimpleCaptureSpec.groovy - expected
+----
+html.replaceAll('\n', ' ') =~ /<img src=".*logo.png"/
+----
+
+[source, java]
+.CaptureBlockMacroProcessor.groovy
+----
+@Override
+protected Object process(AbstractBlock parent, String target, Map<String, Object> attributes) {
+    createBlock(parent, "image", "", [
+            target: CaptureBlockMacroProcessor.classLoader.getResource('logo.png').toString()
+    ], [:])
+}
+----
+
+== Implement Macro to take Screenshot
+
+[source, java]
+.SimpleCaptureSpec.groovy - expected
+----
+html.replaceAll('\n', ' ') =~ /<img src=".*screenshot.png"/
+----
+
+[source, java]
+.CaptureBlockMacroProcessor.groovy
+----
+@Override
+protected Object process(AbstractBlock parent, String target, Map<String, Object> attributes) {
+  Browser.drive {
+      Browser browser = delegate as Browser
+      browser.driver.manage().window().size = new Dimension(800, 600)
+      browser.config.reporter = new ScreenshotReporter()
+      browser.config.reportsDir = '/tmp' as File
+
+      if (target) {
+          go target
+      }
+
+      report 'screenshot'
+  }
+
+
+  createBlock(parent, "image", "", [
+          target: 'file:/tmp/screenshot.png'
+  ], [:])
+}
+----
+
+== Add Title to the Screenshot
+
+[source, java]
+.SimpleCaptureSpec.groovy - expected
+----
+html.replaceAll('\n', ' ') =~ /<img src=".*screenshot.png"/
+html.contains('freshly')
+----
+
+[source, java]
+.CaptureBlockMacroProcessor.groovy
+----
+  createBlock(parent, "image", "", [
+          target: 'file:/tmp/screenshot.png'
+          title : attributes['title']
+  ], [:])
+}
+----
+
+== Add browser Block and expect it to render its content
+
+[source, java]
+.SimpleCaptureSpec.groovy
+----
+"""Capture Test
+
+[browser]
+....
+go "${url}"
+\$("input").value("Greach 2016")
+....
+
+.freshly captured
+capture::[]
+"""
+----
+
+[source, java]
+.SimpleCaptureSpec.groovy - expected
+----
+html.contains('browser: go')
+----
+
+== Implement browser Block
+
+* add to extension registry
+
+[source, java]
+.BrowserBlockProcessor.groovy
+----
+package demo
+
+import org.asciidoctor.ast.AbstractBlock
+import org.asciidoctor.extension.BlockProcessor
+import org.asciidoctor.extension.Reader
+
+class BrowserBlockProcessor extends BlockProcessor {
+    BrowserBlockProcessor(String name, Map<String, Object> config) {
+        super(name, [contexts: [':literal']])
+    }
+
+    @Override
+    Object process(AbstractBlock parent, Reader reader, Map<String, Object> attributes) {
+        createBlock(parent, "paragraph", "browser: " + reader.lines().join("\n"), [:], [:])
+    }
+}
+----
+
+== Implement browser Block with GEB
+
+[source, java]
+.SimpleCaptureSpec.groovy - expected
+----
+! html.contains('go')
+----
+
+[source, java]
+.BrowserBlockProcessor.groovy
+----
+    @Override
+    Object process(AbstractBlock parent, Reader reader, Map<String, Object> attributes) {
+      def shell = new GroovyShell(new Binding([Browser: Browser]))
+      shell.evaluate("Browser.drive{" + reader.lines().join("\n") + "}")
+
+      createBlock(parent, "skip", "", [:], [:])
+    }
+}
+----
