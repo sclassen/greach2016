@@ -31,6 +31,6 @@ screenshot::${url}[]
           html = html.replaceAll('\n', ' ')
 
         then:
-          html.contains('Capture Test XXX')
+          html =~ /<img src=".*logo.png/
     }
 }
