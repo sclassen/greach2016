@@ -15,7 +15,7 @@ go "${url}"
 \$("input").value("Greach 2016")
 ....
 
-screenshot::${url}[]
+screenshot::[]
 
 """
 
