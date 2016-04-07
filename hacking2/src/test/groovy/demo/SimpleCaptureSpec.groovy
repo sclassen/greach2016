@@ -31,6 +31,6 @@ screenshot::${url}[]
           html = html.replaceAll('\n', ' ')
 
         then:
-          html =~ /<img src=".*logo.png/
+          html =~ /<img src=".*screenshot.png/
     }
 }
