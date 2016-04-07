@@ -13,6 +13,7 @@ Go to the Gist AsciiDoctor main page at http://gist.asciidoctor.org/
 ....
 go "file:///home/scl/projects/greach2016/screenshot-demo/src/resources/gist.asciidoctor.org.1.html"
 waitFor(5,0.1){$("#content h1").size()>0}
+sleep(5000)
 ....
 
 .The main page
