@@ -1,2 +1,4 @@
-= Presentation and all Material for Greach 2016
+Material has been moved to
+
+https://github.com/sclassen/sessions/tree/master/greach2016
 
